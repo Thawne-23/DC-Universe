@@ -1,0 +1,84 @@
+/* Flexbox for Images */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Align items to the left */
+  gap: 10px; /* Space between images */
+}
+
+.image-item {
+  text-align: center; /* Center the text below the image */
+}
+
+.image-gallery img {
+  width: 300px; /* Set a fixed width for images */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.image-name {
+  font-size: 20px;
+  margin-top: 5px; /* Space between image and name */
+  text-transform: uppercase; /* Convert text to uppercase */
+}
+
+/* Centering the content */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Space between sections */
+  padding: 20px; /* Add some padding */
+  gap: 1rem;
+}
+
+.section {
+  min-width: 500px; /* Minimum width for sections */
+}
+
+.another {
+  width: 500px; /* Set a fixed width for the .another section */
+  height: auto;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.another img {
+  width: 200px;
+  height: auto;
+}
+
+.another p {
+  text-transform: capitalize;
+  font-weight: normal;
+}
+
+.image-item {
+  text-align: center; /* Center the text below the image */
+  transition: transform 0.3s ease; /* Smooth scaling transition for images */
+}
+
+.image-gallery img {
+  width: 150px; /* Set a fixed width for images */
+  height: auto; /* Maintain aspect ratio */
+  transition: transform 0.3s ease; /* Smooth scaling transition for images */
+}
+
+.image-name {
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 5px; /* Space between image and name */
+  text-transform: uppercase; /* Convert text to uppercase */
+  transition: color 0.3s ease; /* Smooth color transition for text */
+}
+
+/* Hover effects */
+.image-item:hover{
+  transform: scale(1.1); /* Scale image up slightly */
+}
+
+.image-item:hover .image-name {
+  color: blue; /* Change text color to blue on hover */
+  font-weight: bold;
+}

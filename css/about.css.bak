@@ -1,0 +1,54 @@
+.about-content {
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    gap: 100px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 70px;
+    flex-wrap: wrap;
+  }
+  
+  .contentSection {
+    display: flex;
+    flex-direction: column;
+    min-width: 600px;
+    width: 600px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .imgSection img {
+    width: 350px;
+    height: 100%;
+  }
+  
+  .contentSection ul {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .about-content h2 {
+    color: #222;
+  }
+  
+  .about-content p {
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  
+  .videoSection {
+    margin: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .videoSection video {
+    max-width: 80%;
+    height: auto;
+  }
+  

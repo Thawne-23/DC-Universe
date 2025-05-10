@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DC Universe</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            color: #222;
+            text-align: center;
+            overflow: hidden; /* Prevents scroll issues during transition */
+        }
+
+        /* Splash Screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #222; /* Darker background for emphasis */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: transform 1.5s ease-in-out;
+        }
+
+        /* DC Logo Animation */
+        .dc-logo {
+            width: 120px;
+            height: 120px;
+            background: url('images/dc_logo.png') no-repeat center;
+            background-size: contain;
+            animation: spin 2s linear infinite;
+        }
+
+        /* Typing Effect */
+        .typing-text {
+            font-size: 1.2em;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid white;
+            width: 0;
+            color: white;
+            animation: typing 2s steps(20, end) forwards;
+        }
+
+        /* Main Content */
+        .main-content {
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out 1.5s;
+        }
+
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 250px; }
+        }
+
+        /* Slide Down Effect */
+        .slide-down {
+            transform: translateY(100vh); /* Moves the splash screen down */
+        }
+
+        .fade-in {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="splash-screen">
+        <div class="dc-logo"></div>
+        <p class="typing-text">Welcome to the DC Universe...</p>
+    </div>
+
+    <div class="main-content">
+      <div class="container">
+        <header class="header">
+          <div class="navigator-container">
+            <div class="nav">
+        <div class="headerButtons">
+              <a href="index.html"><img id="DC_Logo" src="images/dc_logo.png" alt="DC Logo"></a>
+              <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT US</a></li>
+                <li><a href="contact.html">CONTACT US</a></li>
+                <li><a href="help.html">HELP</a></li>
+              </ul>
+              </div>
+        <div class="register">
+          <ul>
+            <li><a href="#" id="logIn">Log In</a></li>
+            <li><a href="#" id="signUp">Sign Up</a></li>		
+          </ul>
+        </div>
+            </div> <!-- End of .nav -->
+          </div> <!-- End of .navigator-container -->
+        </header>
+    
+        <div class="main-carousel">
+          <div class="carousel-wrapper">
+            <div class="carousel-slide slide1">
+              <span>
+                <h2>Creature Commandos</h2>
+                <h3>A ragtag team of monstrous heroes tackling missions too bizarre for the ordinary.</h3>
+                <button>Get to know Creature Commandos</button>
+              </span>
+            </div>
+            <div class="carousel-slide slide2">
+              <span>
+                <h2>The Flash</h2>
+                <h3>The Fastest Man Alive, racing against time to save the multiverse!</h3>
+                <button>Get to know The Flash</button>
+              </span>
+            </div>
+            <div class="carousel-slide slide3">
+              <span>
+                <h2>Weasel</h2>
+                <h3>A creepy, unpredictable creature with questionable morals—but plenty of surprises!</h3>
+                <button>Get to know Weasel</button>
+              </span>
+            </div>
+          </div>
+        </div>
+        
+    
+        <div class="content">
+          <div class="section">
+            <h2>SUICIDE SQUAD: KILL THE JUSTICE LEAGUE</h2>
+            <div class="image-gallery">
+              <div class="image-item">
+                <img id="harley" src="images/harley.jpg" alt="Image 1" class="character-image">
+                <div class="image-name">Harley<br>Quinn</div>
+              </div>
+              <div class="image-item">
+                <img id="boom" src="images/boomerang.jpg" alt="Image 2" class="character-image">
+                <div class="image-name">Captain<br>Boomerang</div>
+              </div>
+              <div class="image-item">
+                <img id="dead" src="images/deadshot.jpg" alt="Image 3" class="character-image">
+                <div class="image-name">Deadshot</div>
+              </div>
+              <div class="image-item">
+                <img id="shark" src="images/shark.jpg" alt="Image 4" class="character-image">
+                <div class="image-name">King Shark</div>
+              </div>
+            </div> <!-- End of .image-gallery (Suicide Squad) -->
+          </div> <!-- End of .section -->
+          <div class ="section">
+            <div class="another">
+              <h2>Character of the day</h2>
+              <img src="images/reverse_flash.jpg" alt="charDay">
+              <h2>Reverse Flash</h2>
+              <p>For every action, there's an equal and opposite reaction.
+                 And with every step the Flash takes toward the future,
+                  someone from the future is racing backward through time
+                  to stop him—the villainous speedster known as the Reverse-Flash.</p>
+            </div>
+          
+          </div>
+          
+          <div class="section">
+            <h2>WHO'S WHO: THE JUSTICE LEAGUE</h2>
+            <div class="image-gallery">
+              <div class="image-item">
+                <img id = "superman" src="images/img5.jpg" alt="Image 5" class="character-image">
+                <div class="image-name">Superman</div>
+              </div>
+              <div class="image-item">
+                <img id = "batman" src="images/img6.jpg" alt="Image 6" class="character-image">
+                <div class="image-name">Batman</div>
+              </div>
+              <div class="image-item">
+                <img id = "wonder" src="images/img7.jpg" alt="Image 7" class="character-image">
+                <div class="image-name">Wonder<br>Woman</div>
+              </div>
+              <div class="image-item">
+                <img id = "greenlantern" src="images/img8.jpg" alt="Image 8" class="character-image">
+                <div class="image-name">Green<br>Lantern</div>
+              </div>
+              <div class="image-item">
+                <img id = "flash" src="images/img9.jpg" alt="Image 9" class="character-image">
+                <div class="image-name">The Flash</div>
+              </div>
+              <div class="image-item">
+                <img id = "aquaman" src="images/img10.jpg" alt="Image 10" class="character-image">
+                <div class="image-name">Aquaman</div>
+              </div>
+              <div class="image-item">
+                <img id = "cyborg" src="images/img11.jpg" alt="Image 11" class="character-image">
+                <div class="image-name">Cyborg</div>
+              </div>
+            </div> <!-- End of .image-gallery (Justice League) -->
+          </div> <!-- End of .section -->
+        </div> <!-- End of .content -->
+        
+        <footer>© & ™ DC. ALL RIGHTS RESERVED</footer>
+      </div> <!-- End of .container -->
+    
+      <!-- Pop-up overlay -->
+    <div class="popup-overlay"></div>
+    
+    <!-- Pop-up window -->
+    <div class="popup">
+      <button class="close-btn">X</button>
+      <h2>Reverse Flash</h2>
+      <img src="images/reverse_flash.jpg" alt="Reverse Flash" style="width: 100%; border-radius: 5px;">
+      <h3>Reasons why:</h3>
+      <ol>
+        <li>Killed Barry’s mother</li>
+        <li>Made Barry undo saving his mother (Flashpoint)</li>
+        <li>Killed Iris West</li>
+        <li>Almost killed Barry’s fiancée on their wedding day</li>
+        <li>Rewrote Barry’s history to make him suffer</li>
+        <li>Killed Barry’s children in an alternate timeline</li>
+        <li>Stalked Barry for centuries</li>
+        <li>Killed himself to torture Barry emotionally</li>
+        <li>Created the Negative Speed Force</li>
+      </ol>
+      
+    </div>
+    
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+      <div class="modal-content">
+          <span id="closeModal" class="close">&times;</span>
+          <h2 id="modalTitle">Log In</h2>
+          <div id="modalContent"></div>
+      </div>
+    </div>
+    </div>
+    
+    <script src="script.js">
+    </script>
+
+</body>
+</html>

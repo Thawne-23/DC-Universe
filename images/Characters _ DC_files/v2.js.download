@@ -1,0 +1,327 @@
+(function () {
+  const EVENT_NAMESPACE = 'DCUI'; // make sure this matches in the iframe
+  const TIMEOUT_DELAY = 20000; // ms
+  const NOT_LOADED_ERROR = 'dcui iframe has not loaded';
+
+  class DCUILoginClient {
+    constructor() {
+      this._reset();
+    }
+
+    // PUBLIC METHODS
+
+    /**
+     * loads the iframe and sets up the handler to talk back & forth
+     * @param {object} config The configuration for the call to load the iframe
+     * @param {string} iframeUrl The url of the iframe to load
+     */
+    load({ iframeUrl }) {
+      this.iframeUrl = iframeUrl;
+      return new Promise((resolve, reject) => {
+        // create an iframe
+        this.frame = document.createElement('iframe');
+        this.frame.src = iframeUrl;
+        this._initFrameStyles();
+        // if the iframe hasn't loaded for some reason after the timeout, assume it fails
+        this.loadingTimeout = setTimeout(() => {
+          this.pendingCalls[0].reject({
+            error: 'iframe failed to load'
+          });
+        }, TIMEOUT_DELAY);
+
+        this.messageHandler = this._handleMsg.bind(this);
+        // add an event listener for the iframe sending a message
+        window.addEventListener('message', this.messageHandler, false);
+        // kick off the iframe loading by appending it to the document
+        this.pendingCalls[0] = { resolve, reject };
+        document.body.appendChild(this.frame);
+      });
+    }
+
+    // unbind the message handler, destroy the iframe, cleanup state
+    destroy() {
+      window.removeEventListener('message', this.messageHandler, false);
+      document.body.removeChild(this.frame);
+      clearTimeout(this.loadingTimeout);
+      this._reset();
+    }
+
+    /**
+     * Registers a function to call when the user changes
+     * @param {function} fn The function to register
+     * @returns {boolean} True if the function was registered
+     */
+    onUserChange(fn) {
+      this.onUserChangeHandlers.push(fn);
+      return true;
+    }
+
+    /**
+     * Unregisters a function from the list to call when the user changes
+     * @param {function} fn The function to unregister
+     * @returns {boolean} True if the function was unregistered, false if it was not registered
+     */
+    offUserChange(fn) {
+      const index = this.onUserChangeHandlers.indexOf(fn);
+      if (index !== -1) {
+        this.onUserChangeHandlers.splice(index, 1);
+        return true;
+      }
+      return false;
+    }
+
+    /**
+     * Registers a function to call whenever an event happens in the iframe
+     * @param {function} fn The function to register
+     * @returns {boolean} True if the function was registered
+     */
+    onFrameEvent(fn) {
+      this.onFrameEventHandlers.push(fn);
+      return true;
+    }
+
+    /**
+     * Unregisters a function from the list to call when an event happens in the iframe
+     * @param {function} fn The function to unregister
+     * @returns {boolean} True if the function was unregistered, false if it was not registered
+     */
+    offFrameEvent(fn) {
+      const index = this.onFrameEventHandlers.indexOf(fn);
+      if (index !== -1) {
+        this.onFrameEventHandlers.splice(index, 1);
+        return true;
+      }
+      return false;
+    }
+
+    // returns the users current login status on dcui
+    getLoginStatus() {
+      if (!this.loaded) {
+        throw new Error(NOT_LOADED_ERROR);
+      }
+      this.callsCount++;
+      return new Promise((resolve, reject) => {
+        const msg = {
+          type: `${EVENT_NAMESPACE}_getLoginStatus`,
+          id: this.callsCount
+        };
+        this.pendingCalls[this.callsCount] = { ...msg, resolve, reject };
+        this.frame.contentWindow.postMessage(msg, '*');
+      });
+    }
+
+    /**
+     * Gets the current user
+     */
+    getUser() {
+      if (!this.loaded) {
+        throw new Error(NOT_LOADED_ERROR);
+      }
+      this.callsCount++;
+      return new Promise((resolve, reject) => {
+        const msg = {
+          type: `${EVENT_NAMESPACE}_getUser`,
+          id: this.callsCount
+        };
+        this.pendingCalls[this.callsCount] = { ...msg, resolve, reject };
+        this.frame.contentWindow.postMessage(msg, '*');
+      });
+    }
+
+    /**
+     * logs the user in to dcui with a session token
+     * @param {object} config The info to pass to the login call
+     * @param {string} config.sessionId The users sessionId from a previous login
+     */
+    loginWithSession({ sessionId }) {
+      if (!this.loaded) {
+        throw new Error(NOT_LOADED_ERROR);
+      }
+      this.callsCount++;
+      return new Promise((resolve, reject) => {
+        const msg = {
+          type: `${EVENT_NAMESPACE}_loginWithSession`,
+          sessionId,
+          id: this.callsCount
+        };
+        this.pendingCalls[this.callsCount] = { ...msg, resolve, reject };
+        this.frame.contentWindow.postMessage(msg, '*');
+      });
+    }
+
+    /**
+     * Logs out the current user
+     */
+    logout() {
+      if (!this.loaded) {
+        throw new Error(NOT_LOADED_ERROR);
+      }
+      this.callsCount++;
+      return new Promise((resolve, reject) => {
+        const msg = {
+          type: `${EVENT_NAMESPACE}_logout`,
+          id: this.callsCount
+        };
+        this.pendingCalls[this.callsCount] = { ...msg, resolve, reject };
+        this.frame.contentWindow.postMessage(msg, '*');
+      });
+    }
+
+    /**
+     * Shows the login modal
+     */
+    showLoginModal() {
+      if (!this.loaded) {
+        throw new Error(NOT_LOADED_ERROR);
+      }
+      this.callsCount++;
+      return new Promise((resolve, reject) => {
+        this._showFrame();
+
+        const msg = {
+          type: `${EVENT_NAMESPACE}_showLoginModal`,
+          success: true,
+          id: this.callsCount
+        };
+        this.pendingCalls[this.callsCount] = { ...msg, resolve, reject };
+        this.frame.contentWindow.postMessage(msg, '*');
+      });
+    }
+
+    /**
+     * Shows the register modal
+     */
+    showRegisterModal() {
+      if (!this.loaded) {
+        throw new Error(NOT_LOADED_ERROR);
+      }
+      this.callsCount++;
+      return new Promise((resolve, reject) => {
+        this._showFrame();
+
+        const msg = {
+          type: `${EVENT_NAMESPACE}_showRegModal`,
+          success: true,
+          id: this.callsCount
+        };
+        this.pendingCalls[this.callsCount] = { ...msg, resolve, reject };
+        this.frame.contentWindow.postMessage(msg, '*');
+      });
+    }
+
+    // PRIVATE METHODS, DO NOT CALL THESE FROM CLIENT CODE
+
+    /**
+     * basic styling so the iframe can act as a full-page modal
+     * @private
+     */
+    _initFrameStyles() {
+      this.frame.style.display = 'var(--dcui-login-iframe-display-hide, none)';
+      this.frame.style.position = 'var(--dcui-login-iframe-position, fixed)';
+      this.frame.style.top = 'var(--dcui-login-iframe-top, 0)';
+      this.frame.style.left = 'var(--dcui-login-iframe-left, 0)';
+      this.frame.style.zIndex = 'var(--dcui-login-iframe-zIndex, 9999)';
+      this.frame.style.width = 'var(--dcui-login-iframe-width, 100vw)';
+      this.frame.style.height = 'var(--dcui-login-iframe-height, 100vh)';
+    }
+
+    /**
+     * modifys the iframe style to be visible
+     * @private
+     */
+    _showFrame() {
+      this.frame.style.display = 'var(--dcui-login-iframe-display-show, block)';
+    }
+
+    /**
+     * modifys the iframe style to be hidden
+     * @private
+     */
+    _hideFrame() {
+      this.frame.style.display = 'var(--dcui-login-iframe-display-hide, none)';
+    }
+
+    /**
+     * resets the client's state
+     * @private
+     */
+    _reset() {
+      this.frame = null;
+      this.loadingTimeout = null;
+      this.pendingCalls = {};
+      this.callsCount = 0;
+      this.loaded = false;
+      this.iframeUrl = null;
+      this.onUserChangeHandlers = [];
+      this.onFrameEventHandlers = [];
+    }
+
+    /**
+     * handler for when the iframe sends a message
+     * @private
+     * @param {object} event The event fired from the iframe
+     * @param {boolean} event.data.dcLoginIframeEvent flag if the event came from the iframe
+     * @param {string} event.data.type the type of event
+     * @param {number} event.data.id the id of the event to lookup the promise to resolve/reject
+     */
+    _handleMsg(event) {
+      // if the event is the initial loaded event
+      if (
+        event.data.dcLoginIframeEvent &&
+        event.data.type === `${EVENT_NAMESPACE}_loaded`
+      ) {
+        this.loaded = true;
+        clearTimeout(this.loadingTimeout);
+        // we know it will always be the first pending call
+        this.pendingCalls[0].resolve();
+        delete this.pendingCalls[0];
+        return;
+      }
+      // make sure its the one were looking for with the users login info
+      if (
+        event.data.dcLoginIframeEvent &&
+        event.data.id &&
+        this.pendingCalls[event.data.id]
+      ) {
+        if (event.data.error) {
+          this.pendingCalls[event.data.id].reject(event.data);
+        } else {
+          this.pendingCalls[event.data.id].resolve(event.data);
+        }
+        delete this.pendingCalls[event.data.id];
+      } else if (event.data.dcLoginIframeEvent && !event.data.id) {
+        // if it wasnt' a user-triggered event there will be no pending call
+        switch (event.data.type) {
+          case 'DCUI_closeModals':
+            this._hideFrame();
+            break;
+          case 'DCUI_userChanged':
+            this._fireOnUserChangeHandlers(event);
+            break;
+        }
+      }
+      if (event.data.dcLoginIframeEvent) {
+        this._fireFrameEventHandlers(event);
+      }
+    }
+
+    /**
+     * calls all of the registered onUserChangeHandlers
+     * @private
+     */
+    _fireOnUserChangeHandlers(event) {
+      this.onUserChangeHandlers.forEach((fn) => fn(event.data));
+    }
+
+    /**
+     * calls all of the registered onFrameEventHandlers
+     * @private
+     */
+    _fireFrameEventHandlers(event) {
+      this.onFrameEventHandlers.forEach((fn) => fn(event.data));
+    }
+  }
+
+  // exposed as DCUILoginClient
+  window.DCUILoginClient = DCUILoginClient;
+})();

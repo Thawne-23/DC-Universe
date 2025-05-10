@@ -1,0 +1,86 @@
+/* Main Carousel Styles */
+.main-carousel {
+  position: relative;
+  width: 100%;
+  height: 425px; /* Adjust if needed */
+  overflow: hidden;
+  margin-top: 40px;
+}
+
+.carousel-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  animation: slide 20s infinite;
+}
+
+.carousel-slide {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  position: relative;
+  background-size: contain; /* Change from cover to contain */
+  background-position: center;
+  background-repeat: no-repeat; /* Prevent tiling */
+}
+
+
+.slide1 {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),  url("../images/creature_commandos.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.slide2 {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),  url("../images/flash_cover.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.slide3 {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),  url("../images/weasel-in-creature-commados.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Style for Buttons */
+.carousel-slide button{
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  background: rgba(255, 255, 255);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.carousel-slide span {
+  position: absolute;
+  bottom: 50px;
+  left: 100px;
+  text-transform: uppercase;
+}
+
+.carousel-slide h3 {
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.carousel-slide button:hover {
+  background: rgba(13, 109, 253, 0.8);
+}
+
+/* Carousel Animation */
+@keyframes slide {
+  0%, 20% { transform: translateX(0); }
+  25%, 45% { transform: translateX(-100%); }
+  50%, 70% { transform: translateX(-200%); }
+  75%, 100% { transform: translateX(0); }
+}

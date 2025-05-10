@@ -1,0 +1,88 @@
+<?php
+  session_start();
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Us</title>
+  <base href="/Dc_Characters/">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/modal.css">
+
+</head>
+
+<body>
+
+  <div class="container">
+  <header class="header">
+  <div class="navigator-container">
+    <div class="nav">
+      <div class="headerButtons">
+        <a href="index.php"><img id="DC_Logo" src="images/dc_logo.png" alt="DC Logo"></a>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+      </div>
+      <ul id="nav-menu">
+        <li><a href="webpages/home.php">HOME</a></li>
+        <li><a href="webpages/about.php">ABOUT US</a></li>
+        <li><a href="webpages/contact.php">CONTACT US</a></li>
+        <li><a href="webpages/help.php">HELP</a></li>
+      </ul>
+      <span class="register">
+        <li><a href="javascript:void(0);" id="logIn">Log In</a></li>
+        <li><a href="javascript:void(0);" id="signUp">Sign Up</a></li>	
+      </span>
+    </div>
+  </div>
+</header>
+
+
+      <div class="about-content">
+        <div class="imgSection"><img src="images/justice.png"></div>
+        <div class="contentSection"><h1>Welcome to DC Universe!</h1>
+          <p>This website is dedicated to providing detailed descriptions and background information on the greatest heroes and villains of the DC Universe.</p>
+
+          <p>Our goal is to showcase the legendary characters of DC, from the mighty Superman and the fearless Batman to the enigmatic Joker and the unstoppable Darkseid. Each character has a rich history, unique abilities, and a lasting impact on the world of comics.</p>
+  
+          <h3>What You'll Find Here</h3>
+          <ul>
+            <li>Comprehensive profiles of DC superheroes and villains</li>
+            <li>Detailed descriptions of their powers, origins, and affiliations</li>
+            <li>Insights into the worlds they inhabit and their impact on the DC Universe</li>
+          </ul>
+  
+          <p>Explore the characters that have shaped generations of storytelling and discover what makes them truly legendary.</p>
+       </div>
+      </div>
+      <div class="videoSection">
+        <video autoplay controls loop>
+          <source src="images/Barry Runs To Gotham City - The Flash (2023) (HD) Opening Scene.mp4" type="video/mp4">
+        </video>
+      </div>
+
+    <footer>
+      © & ™ DC. ALL RIGHTS RESERVED
+    </footer>
+  </div>
+
+  <!-- Auth Modal -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <h2 id="modalTitle">Log In</h2>
+        <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="script/script.js">
+  </script>
+
+</body>
+
+</html>

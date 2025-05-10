@@ -1,0 +1,225 @@
+.character-facts h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.character-facts table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.character-facts td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.95em;
+}
+
+.fact-label {
+    font-weight: bold;
+    color: #555;
+    width: 200px;
+}
+
+/* Comment Section */
+.comment-section {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.comment-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+#commentText {
+    width: 100%;
+    height: 110px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: none;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    transition: border-color 0.3s;
+}
+
+#commentText:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.comment {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f1f8ff;
+    border-radius: 10px;
+    border-left: 6px solid #007bff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.comment .author {
+    font-weight: 700;
+    color: #004085;
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.comment .timestamp {
+    font-size: 0.8em;
+    color: #6c757d;
+    margin-bottom: 12px;
+}
+
+.comment .reply {
+    font-size: 0.9em;
+    color: #0056b3;
+    cursor: pointer;
+    margin-top: 12px;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.comment .reply:hover {
+    text-decoration: underline;
+}
+
+/* Reply Form Styling */
+.reply-form {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f9fbfe;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgb(0 123 255 / 0.2);
+}
+
+.reply-form textarea {
+    width: 100%;
+    height: 70px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #b8daff;
+    font-size: 0.95em;
+    resize: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.reply-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.reply-form .submit-reply {
+    margin-top: 12px;
+    padding: 10px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.reply-form .submit-reply:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Styling for individual replies */
+.reply-comment {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #e9f2fe;
+    border-left: 6px solid #0056b3;
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.reply-comment .author {
+    font-weight: 700;
+    color: #003366;
+    font-size: 0.95em;
+}
+
+.reply-comment .timestamp {
+    font-size: 0.8em;
+    color: #6c757d;
+    margin-top: 6px;
+}
+
+/* Like Button Styling */
+.like-btn {
+    background-color: #28a745;
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 10px;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.like-btn:hover {
+    background-color: #1e7e34;
+    transform: scale(1.1);
+}
+
+/* Like Button Unlike state */
+.like-btn.unlike {
+    background-color: #dc3545;
+}
+
+.like-btn.unlike:hover {
+    background-color: #a71d2a;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Character Container */
+.character-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.character-container img {
+    max-width: 300px;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.character-content {
+    flex: 1;
+}
