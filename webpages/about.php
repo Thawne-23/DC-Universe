@@ -242,13 +242,13 @@
           <p>Leo steered the development and architecture of the project. From design to deployment, his guidance made this possible.</p>
         </div>
         <div class="profile" tabindex="0" title="UI/UX & Backend Specialist">
-          <img src="images/justice.png" alt="Shanne Christopher Valdez" />
+          <img src="images/shan.png" alt="Shanne Christopher Valdez" />
           <h3>Shanne Christopher Valdez</h3>
           <div class="title">Full-Stack Developer</div>
           <p>Shanne worked on the website design and back-end features, ensuring a user-friendly and responsive experience.</p>
         </div>
         <div class="profile" tabindex="0" title="Database & Interface Integrator">
-          <img src="images/justice.png" alt="Edrian Orencia" />
+          <img src="images/ed.png" alt="Edrian Orencia" />
           <h3>Edrian Orencia</h3>
           <div class="title">Full-Stack Developer</div>
           <p>Edrian focused on component efficiency and seamless Firestore integration to maintain high performance and scalability.</p>

@@ -35,18 +35,19 @@ const fetchCharacter = async (heroName) => {
 // Handle image click on index.php
 document.addEventListener("DOMContentLoaded", () => {
         // Check if the user is logged in when the page loads
-        fetch('script/checkSession.php')
-        .then(res => res.json())
-        .then(data => {
-            if (data.loggedIn) {
-                // Update the DOM to show the logged-in user
-                const regis = document.querySelector(".register");
-                if (regis) {
-                    regis.innerHTML = `<li><a href="webpages/editProfile.php?id=${data.userId}" id="newLogIn">Logged in as ${data.username}</a></li>`;
-                }
-            }
-        })
-        .catch(err => console.error("Session check error:", err));
+    fetch('script/checkSession.php')
+    .then(res => res.json())
+    .then(data => {
+        if (data.loggedIn) {
+            const regis = document.querySelector(".register");
+                regis.innerHTML = `
+                    <a href="webpages/editProfile.php?id=${encodeURIComponent(data.userId)}">
+                        <img src="${data.userPic}" alt="${data.username}'s profile picture" class="profile-pic" />
+                    </a>
+                `;
+        }
+    })
+    .catch(err => console.error("Session check error:", err));
 
         document.querySelectorAll('.character-image').forEach(image => {
             image.addEventListener('click', async () => {
@@ -68,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.location.href = `webpages/character.php?heroId=${heroData.heroId}&userId=${userId}`;
                     } else {
                         console.log("User not logged in.");
+                        openAuthModal("login");
                     }
                 } else {
                     console.log("Character not found.");
@@ -159,8 +161,6 @@ function handleLogin(event) {
     })
     .then(response => response.json()) // Parse the JSON response
     .then(data => {
-        console.log(data);  // Log the response from PHP script
-    
         if (data.status === "success") {  // Check if login is successful
             alert(data.message);
             closeAuthModal();
@@ -174,8 +174,13 @@ function handleLogin(event) {
                 regis.innerHTML = "";
                  
                 // Add new content inside the "register" element
+                // regis.innerHTML = `
+                //     <li><a href="webpages/editProfile.php?id=${data.userId}" id="newLogIn">Logged in as ${data.username}</a></li>
+                // `;
                 regis.innerHTML = `
-                    <li><a href="webpages/editProfile.php?id=${data.userId}" id="newLogIn">Logged in as ${data.username}</a></li>
+                    <a href="webpages/editProfile.php?id=${encodeURIComponent(data.userId)}">
+                        <img src="${data.userPic}" alt="${data.username}'s profile picture" class="profile-pic" />
+                    </a>
                 `;
             }
     
@@ -227,18 +232,4 @@ function handleSignup(event) {
         console.error("Error:", error);
         alert("An error occurred.");
     });
-}
-
-
-// Menu Toggle
-function toggleMenu() {
-    const navMenu = document.getElementById("nav-menu");
-    
-    if (navMenu.style.display === "flex") {
-      navMenu.style.display = "none";
-    } else {
-      navMenu.style.display = "flex";
-      navMenu.style.flexDirection = "column";
-      navMenu.style.width = "100%";
-    }
 }

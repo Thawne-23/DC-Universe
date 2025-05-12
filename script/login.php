@@ -34,12 +34,14 @@ if ($result->num_rows > 0) {
         $_SESSION['email'] = $user['email']; 
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['user_type'] = $user['user_type']; 
+        $_SESSION['profile_picture'] = $user['profile_picture'];
         echo json_encode([
             "status" => "success",
             "message" => "Login successful! Welcome, " . $user['username'],
             "username" => $user['username'],
             "userId" => $user['user_id'],
-            "userType" => $user['user_type']
+            "userType" => $user['user_type'],
+            "userPic" => $user['profile_picture']
         ]);
     } else {
         echo json_encode(["status" => "error", "message" => "Invalid password."]);

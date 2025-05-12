@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+if (empty($_SESSION['user_id'])) {
+    header("Location: home.php");
+    exit;
+}
+
+
 $conn = include '../script/dbConnect.php';
 
 if ($conn->connect_error) {

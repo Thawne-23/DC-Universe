@@ -20,10 +20,9 @@
       gap: 40px;
       padding: 40px 20px;
       margin-top: 70px;
-      background: #f5f5f5;
     }
 
-    form {
+    .contact-container form {
       flex: 1;
       min-width: 320px;
       max-width: 500px;
@@ -34,7 +33,7 @@
       animation: slideUp 0.5s ease;
     }
 
-    form p {
+    .contact-container form p {
       margin-bottom: 20px;
       font-size: 18px;
     }
@@ -45,9 +44,9 @@
       display: block;
     }
 
-    input[type="text"],
-    input[type="email"],
-    textarea {
+    .contact-container input[type="text"],
+    .contact-container input[type="email"],
+    .contact-container textarea {
       width: 100%;
       padding: 12px 14px;
       margin-top: 6px;

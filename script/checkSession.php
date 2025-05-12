@@ -7,7 +7,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['user_id'])) {
     echo json_encode([
         "loggedIn" => true,
         "username" => $_SESSION['username'],
-        "userId" => $_SESSION['user_id']  
+        "userId" => $_SESSION['user_id'],
+        "userPic" => $_SESSION['profile_picture']  
     ]);
 } else {
     // User is not logged in

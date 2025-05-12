@@ -92,7 +92,7 @@
     const chatbotTitle = document.getElementById('chatbotTitle');
     const characterSelect = document.getElementById('characterSelect');
 
-    const API_KEY = "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"; 
+    const API_KEY = "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"; 
 
     // Mapping of character values to their prompts, initial messages, and image paths
     const characters = {
@@ -209,53 +209,71 @@
              // Scroll to show "Typing..."
              messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            try {
-                const charData = characters[currentCharacter];
-                 // Fetch AI response from OpenRouter
-                 const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                     method: "POST",
-                     headers: {
-                         "Content-Type": "application/json",
-                         "Authorization": `Bearer ${API_KEY}`
-                     },
-                     body: JSON.stringify({
-                         model: "meta-llama/llama-4-maverick:free", // Or other models if needed
-                         messages: [{ role: "user", content: `${charData.prompt} Message: ${userMessage}` }] // Use the dynamic prompt
-                     })
-                 });
-
-                 // Check for API errors before processing response
-                 if (!response.ok) {
-                     const errorBody = await response.text(); // Get error body for more info
-                     throw new Error(`API Error: ${response.status} - ${response.statusText} - ${errorBody}`);
-                 }
-
-                 const data = await response.json();
-                 let aiReply = data.choices?.[0]?.message?.content || "Error: No response from AI.";
-
-                 // Convert markdown to HTML (bold and italics)
-                 aiReply = aiReply.replace(/\*(.*?)\*/g, "<b>$1</b>"); // *text*
-                 aiReply = aiReply.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>"); // **text**
-                 aiReply = aiReply.replace(/_(.*?)_/g, "<i>$1</i>"); // _text_
+           try {
+            const charData = characters[currentCharacter];
+            const models = [
+              "meta-llama/llama-4-maverick:free",
+              "deepseek/deepseek-r1:free",
+              "google/gemini-2.0-flash-exp:free",
+              "mistralai/mistral-7b-instruct:free",
+              "openchat/openchat-7b:free",
+              "nousresearch/deephermes-3-llama-3-8b-preview:free",
+              "qwen/qwen2.5-vl-3b-instruct:free",
+              "nvidia/llama-3.1-nemotron-nano-8b-v1:free",
+              "openrouter/quasar-alpha",
+              "openrouter/optimus-alpha"
+            ];
 
 
-                 // Remove the "Typing..." message
-                 messagesContainer.removeChild(typingMessageElement);
+            let aiReply = "Error: No response from AI.";
+            let success = false;
 
-                 // Add the actual bot response
-                 appendBotMessage(aiReply, charData.image);
+            for (const model of models) {
+                const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: model,
+                        messages: [{ role: "user", content: `${charData.prompt} Message: ${userMessage}` }]
+                    })
+                });
 
+                if (response.ok) {
+                    const data = await response.json();
+                    aiReply = data.choices?.[0]?.message?.content || "Error: No response from AI.";
 
-             } catch (error) {
-                 console.error("API Error:", error); // Log error details in the console
-                 // Remove typing indicator and show error message
-                 if(messagesContainer.contains(typingMessageElement)) { // Check if the typing element still exists before trying to remove
-                     messagesContainer.removeChild(typingMessageElement);
-                 }
-                 appendBotMessage("Error connecting to AI.", characters[currentCharacter].image); // Show error with current character's pic
-             }
+                    // Convert markdown to HTML
+                    aiReply = aiReply.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>"); // **text**
+                    aiReply = aiReply.replace(/\*(.*?)\*/g, "<b>$1</b>"); // *text*
+                    aiReply = aiReply.replace(/_(.*?)_/g, "<i>$1</i>"); // _text_
 
-            // Scroll to the latest message after response (handled within appendBotMessage)
+                    success = true;
+                    break; // Exit loop if successful
+                } else {
+                    const errorBody = await response.text();
+                    console.warn(`Model ${model} failed: ${response.status} - ${errorBody}`);
+                }
+            }
+
+            // Remove typing indicator
+            if (messagesContainer.contains(typingMessageElement)) {
+                messagesContainer.removeChild(typingMessageElement);
+            }
+
+            // Show response or final error
+            appendBotMessage(aiReply, charData.image);
+
+        } catch (error) {
+            console.error("API Error:", error);
+            if (messagesContainer.contains(typingMessageElement)) {
+                messagesContainer.removeChild(typingMessageElement);
+            }
+            appendBotMessage("Error connecting to AI.", characters[currentCharacter].image);
+        }
+           // Scroll to the latest message after response (handled within appendBotMessage)
         }
     });
 

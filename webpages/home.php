@@ -200,8 +200,19 @@ session_start();
   </div>
 </div>
 
-
 <script src="script/script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+        fetch('script/checkSession.php')
+        .then(res => res.json())
+        .then(data => {
+            if (!data.loggedIn) {
+              openAuthModal("login");
+            }
+        })
+        .catch(err => console.error("Session check error:", err));
+      });
+</script>
 </body>
 
 </html>

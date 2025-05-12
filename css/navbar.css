@@ -1,73 +1,227 @@
-.navigator-container .nav {
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  background-color: white;
-  width: 100%;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
+/* === Navbar Container === */
+        .navigator-container .nav {
+          display: flex;
+          align-items: center; /* Vertically aligns items in the flex container */
+          margin: 0;
+          padding: 0;
+          position: fixed;
+          background-color: white;
+          width: 100%;
+          z-index: 1000;
+          top: 0;
+          left: 0;
+          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+          justify-content: space-between;
+          flex-wrap: wrap;
 
-.headerButtons {
-  display: flex;
-  align-items: center;
-}
+          /* Set a fixed height for the navbar to prevent it from changing size */
+          height: 60px; /* Adjust this value for your desired fixed navbar height */
+        }
 
-.headerButtons a {
-  text-transform: uppercase;
-  cursor: pointer;
-}
+        /* === Logo + Toggle Container === */
+        .headerButtons {
+          display: flex;
+          align-items: center; /* Ensures items within headerButtons are vertically aligned */
+        }
 
-.navigator-container .nav img {
-  margin-right: 15px;
-  margin-left: 15px;
-  height: 40px;
-  width: 40px;
-}
+        .headerButtons a {
+          text-transform: uppercase;
+          cursor: pointer;
+          /* Remove any default vertical padding/margin that might affect alignment */
+          padding: 0;
+          margin: 0;
+          display: flex; /* Use flex to help align the image inside the anchor */
+          align-items: center; /* Vertically center the image within the anchor */
+        }
 
-.navigator-container .nav ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+        /* === Logo Image === */
+        .navigator-container .nav img {
+          margin-right: 15px;
+          margin-left: 15px;
+          height: 40px; /* Fixed height */
+          width: 40px;  /* Fixed width */
+          /* Ensure no extra padding or margin affects alignment */
+          padding: 0;
+          margin-top: 0;
+          margin-bottom: 0;
+        }
 
-.navigator-container .nav li {
-  margin-right: 10px;
-}
+        /* === Navigation Menu === */
+        #nav-menu {
+          display: flex;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          gap: 20px;
+          flex-direction: row;
+          align-items: center; /* Ensure menu items are vertically aligned */
+        }
 
-.navigator-container .nav a {
-  font-weight: bold;
-  text-decoration: none;
-  color: black;
-  padding: 5px;
-}
+        /* === Nav Items === */
+        .navigator-container .nav li {
+          margin-right: 10px;
+          /* Remove any default vertical margin/padding */
+          margin-top: 0;
+          margin-bottom: 0;
+          padding: 0;
+        }
 
-.navigator-container .nav a:hover {
-  color: blue;
-}
+        .navigator-container .nav a {
+          font-weight: bold;
+          text-decoration: none;
+          color: black;
+          padding: 5px;
+          /* Ensure vertical padding is consistent or removed if causing issues */
+          padding-top: 0;
+          padding-bottom: 0;
+        }
 
-/* Align register links to the right */
-.register {
-  margin-left: auto;  /* Push it to the right */
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-}
+        .navigator-container .nav a:hover {
+          color: blue;
+        }
 
-.register li {
-  text-transform: uppercase;
-  list-style: none;
-}
+        /* === Register Buttons === */
+        .register {
+          display: flex; /* Flex container for login/signup or profile pic */
+          list-style: none;
+          gap: 15px;
+          margin-left: auto;
+          align-items: center; /* Vertically center items within the register div */
+          padding: 0; /* Remove default ul padding if any */
+          margin-right: 15px; /* Add some right margin for spacing */
+          /* Remove any default vertical margin */
+          margin-top: 0;
+          margin-bottom: 0;
+        }
 
-.menu-toggle {
-  display: none;
-  cursor: pointer;
-  font-size: 24px;
-  position: absolute;
-  right: 15px;
-}
+        .register li {
+          text-transform: uppercase;
+          list-style: none;
+          /* Remove any default vertical margin/padding */
+          margin: 0;
+          padding: 0;
+        }
+
+        .register li a {
+          text-decoration: none;
+          color: black;
+          font-weight: bold;
+          /* Ensure vertical padding is consistent or removed */
+          padding-top: 0;
+          padding-bottom: 0;
+          display: flex; /* Use flex to help align content inside the anchor */
+          align-items: center; /* Vertically center content inside the anchor */
+          height: 100%; /* Make anchor fill height to aid alignment */
+        }
+
+        /* === Hamburger Menu === */
+        .menu-toggle {
+          display: none;
+          cursor: pointer;
+          font-size: 24px;
+          margin-right: 15px; /* Ensure space for toggle button */
+          /* Vertically center the toggle button */
+          display: flex;
+          align-items: center;
+          height: 100%;
+        }
+
+        /* === Responsive Behavior === */
+
+        /* Small screens (mobile) */
+        @media (max-width: 768px) {
+          #nav-menu {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background-color: white;
+            padding: 10px 0;
+            /* Position the dropdown menu below the fixed header */
+            position: absolute;
+            top: 60px; /* Position below the 60px fixed header */
+            left: 0;
+            box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1); /* Add shadow below menu */
+            align-items: flex-start; /* Align menu items to the left in column view */
+          }
+
+          #nav-menu.open {
+            display: flex;
+          }
+
+          .register {
+            flex-direction: column;
+            align-items: flex-start; /* Align register items to the left in column view */
+            margin-left: 15px;
+            margin-top: 10px;
+            margin-right: 15px;
+          }
+
+          .menu-toggle {
+            display: flex; /* Show toggle button */
+          }
+
+           .navigator-container .nav {
+               padding: 0 15px; /* Add some horizontal padding */
+               box-sizing: border-box; /* Include padding in the element's total width */
+           }
+        }
+
+        /* Large screens (desktop) */
+        @media (min-width: 769px) {
+          #nav-menu {
+            display: flex !important; /* Ensure display flex overrides previous display: none */
+            flex-direction: row;
+            justify-content: flex-start;
+            /* Remove absolute positioning for desktop */
+            position: static;
+            top: auto;
+            box-shadow: none; /* Remove dropdown shadow for desktop */
+            align-items: center; /* Ensure menu items are vertically aligned on desktop */
+          }
+
+          .menu-toggle {
+            display: none; /* Hide toggle button */
+          }
+
+          .register {
+            display: flex !important; /* Ensure display flex overrides previous display: column */
+            flex-direction: row;
+            margin-left: auto;
+            margin-top: 0; /* Reset margin for desktop */
+            align-items: center; /* Center items in the register div for desktop */
+            margin-right: 15px; /* Keep right margin for spacing */
+          }
+           /* Ensure the logo is vertically centered on desktop */
+           .headerButtons {
+                align-items: center;
+           }
+        }
+
+        /* Profile picture styles (as included in your initial HTML/CSS) */
+        .register img.profile-pic {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #007bff;
+            transition: transform 0.3s ease;
+            padding: 0;
+            /* Ensure no extra margin/padding affects alignment */
+            margin: 0;
+            display: block; /* Ensure image behaves as a block element */
+        }
+
+        .register img.profile-pic:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        /* Style for the anchor wrapping the profile pic to help with alignment */
+        .register a {
+            display: flex; /* Use flex to center the image */
+            align-items: center; /* Vertically center image within the anchor */
+            justify-content: center; /* Horizontally center image within the anchor */
+            height: 100%; /* Make the anchor fill the height of its container (.register) */
+            padding: 0; /* Remove default anchor padding if it interferes */
+            margin: 0; /* Remove default anchor margin if it interferes */
+        }

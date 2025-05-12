@@ -63,6 +63,7 @@ $stmt->bind_param($types, ...$params);
 if ($stmt->execute()) {
     echo json_encode(['status' => 'success', 'message' => 'Profile updated successfully']);
     $_SESSION['username'] = $username;
+    $_SESSION['profile_picture'] = $profileImageBase64;
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Failed to update profile']);
 }

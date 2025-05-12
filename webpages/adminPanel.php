@@ -223,7 +223,25 @@ $conn->close();
         .gap-2 > * {
             margin-left: 0.5rem;
         }
+        #generateAI {
+            background: linear-gradient(135deg, #1e90ff, #00bfff);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 191, 255, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
 
+        #generateAI:hover {
+            background: linear-gradient(135deg, #00bfff, #1e90ff);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 191, 255, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -254,13 +272,16 @@ $conn->close();
                 <h4 class="mt-3">Add New Character</h4>
                 <form method="POST" action="" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label>Character Name</label>
-                        <input type="text" name="char_name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
+                    <label>Character Name</label>
+                    <input type="text" name="char_name" class="form-control" id="char_name" required>
+                </div>
+                <div class="form-group">
+                    <div>
                         <label>Description</label>
-                        <textarea name="char_desc" class="form-control" rows="3" required></textarea>
-                    </div>
+                        <button type="button" id="generateAI" onclick="generate()">Generate using AI</button>
+                    </div>  
+                    <textarea name="char_desc" class="form-control" id="char_desc" rows="3" required></textarea>
+                </div>
                     <div class="form-group">
                         <label>Picture</label>
                         <input type="file" name="char_picture" class="form-control-file" required>
@@ -557,6 +578,63 @@ $conn->close();
                 alert('An error occurred while logging out.');
             });
         });
+                async function generate() {
+            const input = document.getElementById("char_name").value.trim();
+            const output = document.getElementById("char_desc");
+            const API_KEY = "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"; // Replace this with your actual OpenRouter API key
+
+            if (!input) {
+                output.value = "Please enter a character name.";
+                return;
+            }
+
+            output.value = "Generating description...";
+
+            const models = [
+              "meta-llama/llama-4-maverick:free",
+              "deepseek/deepseek-r1:free",
+              "google/gemini-2.0-flash-exp:free",
+              "mistralai/mistral-7b-instruct:free",
+              "openchat/openchat-7b:free",
+              "nousresearch/deephermes-3-llama-3-8b-preview:free",
+              "qwen/qwen2.5-vl-3b-instruct:free",
+              "nvidia/llama-3.1-nemotron-nano-8b-v1:free",
+              "openrouter/quasar-alpha",
+              "openrouter/optimus-alpha"
+            ];
+
+            for (const model of models) {
+                try {
+                    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${API_KEY}`
+                        },
+                        body: JSON.stringify({
+                            model,
+                            messages: [{
+                                role: "user",
+                                content: `Generate a creative character description for: ${input}, give the answer only and at least 200 words`
+                            }]
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        const aiText = data.choices?.[0]?.message?.content || "No description generated.";
+                        output.value = aiText;
+                        return;
+                    } else {
+                        console.warn(`Model ${model} failed:`, await response.text());
+                    }
+                } catch (err) {
+                    console.error(`Error using model ${model}:`, err);
+                }
+            }
+
+            output.value = "Failed to generate description. Please try again later.";
+        }
     </script>
 </body>
 </html>
